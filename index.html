@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Deep Learning & Full-Stack Developer Portfolio — Building intelligent systems from data to deployment." />
+  <meta name="keywords" content="Deep Learning, Full Stack Developer, Python, AI, ML, CSE, Portfolio" />
+  <meta name="author" content="Shyamli Khadse" />
+  <title>Portfolio | Shyamli Khadse</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=IBM+Plex+Mono:wght@300;400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Orbitron', 'sans-serif'],
+            mono: ['IBM Plex Mono', 'monospace'],
+            body: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            cyan: { DEFAULT: '#00FFFF', dim: '#00CCCC', dark: '#007777' },
+            bg: { DEFAULT: '#0A0A0F', card: '#10101A', border: '#1C1C2E' },
+          },
+          animation: {
+            'marquee': 'marquee 28s linear infinite',
+            'glow-pulse': 'glowPulse 2.5s ease-in-out infinite',
+            'float': 'float 6s ease-in-out infinite',
+            'scan': 'scan 4s linear infinite',
+          },
+          keyframes: {
+            marquee: { '0%': { transform: 'translateX(0%)' }, '100%': { transform: 'translateX(-50%)' } },
+            glowPulse: { '0%,100%': { textShadow: '0 0 8px #00FFFF, 0 0 20px #00FFFF' }, '50%': { textShadow: '0 0 20px #00FFFF, 0 0 50px #00FFFF, 0 0 80px #00CCCC' } },
+            float: { '0%,100%': { transform: 'translateY(0px)' }, '50%': { transform: 'translateY(-12px)' } },
+            scan: { '0%': { top: '0%' }, '100%': { top: '100%' } },
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root { --cyan: #00FFFF; --cyan-dim: #00CCCC; --bg: #0A0A0F; --bg-card: #10101A; --border: #1C1C2E; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background-color: var(--bg); color: #E0E0E0; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--cyan-dim); border-radius: 2px; }
+    #particle-canvas { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+    .glass-nav { background: rgba(10, 10, 15, 0.75); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0, 255, 255, 0.08); }
+    .glow-text { color: var(--cyan); text-shadow: 0 0 10px rgba(0, 255, 255, 0.7), 0 0 30px rgba(0, 255, 255, 0.3); }
+    .btn-cyan { background: transparent; border: 1px solid var(--cyan); color: var(--cyan); transition: all 0.3s ease; position: relative; overflow: hidden; }
+    .btn-cyan::before { content: ''; position: absolute; inset: 0; background: var(--cyan); transform: scaleX(0); transform-origin: left; transition: transform 0.3s ease; z-index: -1; }
+    .btn-cyan:hover::before { transform: scaleX(1); }
+    .btn-cyan:hover { color: #0A0A0F; box-shadow: 0 0 20px rgba(0, 255, 255, 0.4); }
+    .card { background: var(--bg-card); border: 1px solid var(--border); transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; }
+    .card:hover { border-color: rgba(0, 255, 255, 0.45); transform: translateY(-4px); box-shadow: 0 8px 40px rgba(0, 255, 255, 0.08); }
+    .section-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--cyan); opacity: 0.7; }
+    .skill-pill { background: rgba(0, 255, 255, 0.06); border: 1px solid rgba(0, 255, 255, 0.2); color: #B0E8E8; font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; padding: 4px 12px; border-radius: 4px; transition: all 0.25s ease; }
+    .skill-pill:hover { background: rgba(0, 255, 255, 0.14); border-color: var(--cyan); color: var(--cyan); }
+    .marquee-track { display: flex; gap: 2rem; white-space: nowrap; animation: marquee 28s linear infinite; }
+    .marquee-track:hover { animation-play-state: paused; }
+    .proj-tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; padding: 2px 8px; border-radius: 3px; background: rgba(0, 255, 255, 0.08); border: 1px solid rgba(0, 255, 255, 0.25); color: var(--cyan-dim); }
+    .float-cta { position: fixed; bottom: 2rem; right: 2rem; z-index: 999; animation: float 6s ease-in-out infinite; }
+    .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(0,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,255,0.03) 1px, transparent 1px); background-size: 48px 48px; z-index: 0; pointer-events: none; }
+    .scan-line { position: absolute; left: 0; width: 100%; height: 1px; background: linear-gradient(to right, transparent, rgba(0,255,255,0.3), transparent); animation: scan 4s linear infinite; z-index: 1; pointer-events: none; }
+    .nav-link { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; letter-spacing: 0.1em; color: #888; transition: color 0.2s; text-transform: uppercase; }
+    .nav-link:hover { color: var(--cyan); }
+    .social-icon { color: #666; transition: color 0.2s, transform 0.2s; font-size: 1.15rem; }
+    .social-icon:hover { color: var(--cyan); transform: translateY(-2px); }
+    .bento-badge { background: var(--bg-card); border: 1px solid rgba(0, 255, 255, 0.18); border-radius: 12px; transition: all 0.3s ease; position: relative; overflow: hidden; }
+    .bento-badge::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at top left, rgba(0,255,255,0.07), transparent 70%); pointer-events: none; }
+    .bento-badge:hover { border-color: rgba(0,255,255,0.5); transform: scale(1.02); box-shadow: 0 0 24px rgba(0,255,255,0.1); }
+    @media (max-width: 640px) { .float-cta { bottom: 1rem; right: 1rem; } }
+  </style>
+</head>
+
+<body class="antialiased">
+
+  <a href="#" aria-label="Download Resume" class="float-cta btn-cyan flex items-center gap-2 px-4 py-3 rounded-lg font-mono text-xs tracking-widest uppercase no-underline">
+    <i class="fas fa-download"></i> Resume
+  </a>
+
+  <header class="glass-nav sticky top-0 z-50">
+    <nav class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <span class="font-display text-sm font-bold glow-text tracking-widest uppercase">S.Khadse</span>
+      <ul class="hidden md:flex items-center gap-8">
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#achievements" class="nav-link">Achievements</a></li>
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#stack" class="nav-link">Stack</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+      <a href="#contact" class="btn-cyan px-4 py-2 rounded text-xs font-mono tracking-widest hidden md:block">Hire Me</a>
+      <button class="md:hidden text-cyan-DEFAULT" aria-label="Menu"><i class="fas fa-bars"></i></button>
+    </nav>
+  </header>
+
+  <section id="about" class="relative min-h-screen flex items-center overflow-hidden">
+    <div class="hero-grid"></div>
+    <div class="scan-line"></div>
+    <canvas id="particle-canvas"></canvas>
+
+    <div class="relative z-10 max-w-6xl mx-auto px-6 py-24 w-full">
+      <p class="section-label mb-4" data-aos="fade-up">// 7th Semester · CSE · G H Raisoni University</p>
+      <h1 class="font-display font-black text-4xl sm:text-5xl md:text-6xl leading-tight mb-6" data-aos="fade-up" data-aos-delay="100">
+        Building<br/><span class="glow-text" style="animation: glowPulse 2.5s ease-in-out infinite;">Intelligent Systems</span><br/>
+        <span class="text-gray-400">from Data to</span> <span class="glow-text"> Deployment.</span>
+      </h1>
+      <p class="text-gray-400 text-base md:text-lg max-w-xl mb-10 leading-relaxed font-mono text-sm" data-aos="fade-up" data-aos-delay="200">
+        Specializing in <span class="text-cyan">Python</span> &amp; <span class="text-cyan">Deep Learning</span>. 
+        Focused on creating high-impact AI solutions, from child tracking systems to full-stack conversational assistants.
+      </p>
+      <div class="flex flex-wrap gap-4" data-aos="fade-up" data-aos-delay="300">
+        <a href="#projects" class="btn-cyan px-6 py-3 rounded text-sm tracking-widest font-mono">View_Projects</a>
+        <a href="#contact" class="px-6 py-3 rounded text-sm tracking-widest border border-gray-700 text-gray-400 hover:border-gray-500 transition-colors font-mono">Get_In_Touch</a>
+      </div>
+      <div class="flex flex-wrap gap-8 mt-16" data-aos="fade-up" data-aos-delay="400">
+        <div><p class="font-display text-2xl font-bold glow-text">3+</p><p class="text-xs text-gray-500 mt-1 font-mono">AI Projects</p></div>
+        <div class="w-px bg-border"></div>
+        <div><p class="font-display text-2xl font-bold glow-text">2</p><p class="text-xs text-gray-500 mt-1 font-mono">Certifications</p></div>
+        <div class="w-px bg-border"></div>
+        <div><p class="font-display text-2xl font-bold glow-text">1st</p><p class="text-xs text-gray-500 mt-1 font-mono">State Cluster Win</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="achievements" class="py-24 overflow-hidden bg-[#0C0C14]">
+    <div class="max-w-6xl mx-auto px-6 mb-14">
+      <p class="section-label mb-3" data-aos="fade-up">// Recognition</p>
+      <h2 class="font-display text-3xl font-bold text-white" data-aos="fade-up" data-aos-delay="80">Achievement <span class="glow-text">Highlights</span></h2>
+    </div>
+    <div class="relative overflow-hidden py-4 mb-14 border-y border-border">
+      <div class="marquee-track">
+        <span class="inline-flex items-center gap-2 text-xs font-mono text-gray-400"><i class="fas fa-trophy text-cyan"></i> AI FOR BHARAT HACKATHON FINALIST</span>
+        <span class="text-gray-700">◆</span>
+        <span class="inline-flex items-center gap-2 text-xs font-mono text-gray-400"><i class="fab fa-java text-cyan"></i> ORACLE CERTIFIED JAVA ASSOCIATE</span>
+        <span class="text-gray-700">◆</span>
+        <span class="inline-flex items-center gap-2 text-xs font-mono text-gray-400"><i class="fas fa-cloud text-cyan"></i> MH STATE SKILLS — CLOUD WINNER</span>
+        <span class="text-gray-700">◆</span>
+      </div>
+    </div>
+    <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-5">
+      <div class="bento-badge p-7" data-aos="fade-up">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center bg-cyan/10 border border-cyan/20"><i class="fas fa-trophy text-cyan"></i></div>
+          <span class="skill-pill">Hackathon</span>
+        </div>
+        <h3 class="font-display text-base font-bold text-white mb-2">AI for Bharat</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">National Finalist. Developed "Aamchi Mumbai Guide" chatbot and "Retro Revival" for localized AI impact.</p>
+      </div>
+      <div class="bento-badge p-7" data-aos="fade-up" data-aos-delay="100">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center bg-cyan/10 border border-cyan/20"><i class="fab fa-java text-cyan text-lg"></i></div>
+          <span class="skill-pill">Oracle</span>
+        </div>
+        <h3 class="font-display text-base font-bold text-white mb-2">Java Associate</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Certified Java Foundations Associate, validating strong OOP and system logic fundamentals.</p>
+      </div>
+      <div class="bento-badge p-7" data-aos="fade-up" data-aos-delay="200">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center bg-cyan/10 border border-cyan/20"><i class="fas fa-cloud text-cyan"></i></div>
+          <span class="skill-pill">State Level</span>
+        </div>
+        <h3 class="font-display text-base font-bold text-white mb-2">MH State Skills</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Cluster Level Winner in Cloud Computing, demonstrating proficiency in cloud infrastructure.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="py-24 bg-bg">
+    <div class="max-w-6xl mx-auto px-6">
+      <p class="section-label mb-3" data-aos="fade-up">// Selected Work</p>
+      <h2 class="font-display text-3xl font-bold text-white mb-14" data-aos="fade-up">Core <span class="glow-text">Projects</span></h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-7">
+        <article class="card rounded-xl overflow-hidden flex flex-col" data-aos="fade-up">
+          <div class="h-44 relative bg-gradient-to-br from-cyan/20 to-bg-card flex items-center justify-center text-4xl">📍</div>
+          <div class="p-6 flex flex-col flex-1">
+            <div class="flex flex-wrap gap-2 mb-3">
+              <span class="proj-tag">IoT</span><span class="proj-tag">Python</span><span class="proj-tag">Real-time</span>
+            </div>
+            <h3 class="font-display text-sm font-bold text-white mb-2">Child Tracking System</h3>
+            <p class="text-gray-500 text-sm leading-relaxed flex-1">A comprehensive real-time tracking solution designed for child safety, integrating GPS data and instant notification alerts.</p>
+            <div class="mt-5 flex gap-3">
+              <a href="https://github.com/kshyamli" class="btn-cyan px-4 py-2 rounded text-xs font-mono">CODE</a>
+            </div>
+          </div>
+        </article>
+        <article class="card rounded-xl overflow-hidden flex flex-col" data-aos="fade-up" data-aos-delay="100">
+          <div class="h-44 relative bg-gradient-to-br from-cyan/20 to-bg-card flex items-center justify-center text-4xl">🗺️</div>
+          <div class="p-6 flex flex-col flex-1">
+            <div class="flex flex-wrap gap-2 mb-3">
+              <span class="proj-tag">NLP</span><span class="proj-tag">Python</span>
+            </div>
+            <h3 class="font-display text-sm font-bold text-white mb-2">Aamchi Mumbai Guide</h3>
+            <p class="text-gray-500 text-sm leading-relaxed flex-1">Conversational AI built for AI for Bharat, providing localized Mumbai travel and culture insights.</p>
+            <div class="mt-5 flex gap-3">
+              <a href="https://github.com/kshyamli" class="btn-cyan px-4 py-2 rounded text-xs font-mono">CODE</a>
+            </div>
+          </div>
+        </article>
+        <article class="card rounded-xl overflow-hidden flex flex-col" data-aos="fade-up" data-aos-delay="200">
+          <div class="h-44 relative bg-gradient-to-br from-cyan/20 to-bg-card flex items-center justify-center text-4xl">🕹️</div>
+          <div class="p-6 flex flex-col flex-1">
+            <div class="flex flex-wrap gap-2 mb-3">
+              <span class="proj-tag">JS</span><span class="proj-tag">Canvas</span>
+            </div>
+            <h3 class="font-display text-sm font-bold text-white mb-2">Retro Revival</h3>
+            <p class="text-gray-500 text-sm leading-relaxed flex-1">Browser-based retro game utilizing HTML5 Canvas API and custom physics logic.</p>
+            <div class="mt-5 flex gap-3">
+              <a href="https://github.com/kshyamli" class="btn-cyan px-4 py-2 rounded text-xs font-mono">CODE</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="stack" class="py-24 bg-[#0C0C14]">
+    <div class="max-w-6xl mx-auto px-6">
+      <p class="section-label mb-3" data-aos="fade-up">// Arsenal</p>
+      <h2 class="font-display text-3xl font-bold text-white mb-14" data-aos="fade-up">Tech <span class="glow-text">Stack</span></h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div>
+          <div class="flex items-center gap-2 mb-5 font-mono text-xs text-gray-400 uppercase tracking-widest"><i class="fas fa-code text-cyan"></i> Languages</div>
+          <div class="flex flex-wrap gap-2">
+            <span class="skill-pill">Python</span><span class="skill-pill">Java</span><span class="skill-pill">C / C++</span><span class="skill-pill">SQL</span>
+          </div>
+        </div>
+        <div>
+          <div class="flex items-center gap-2 mb-5 font-mono text-xs text-gray-400 uppercase tracking-widest"><i class="fas fa-brain text-cyan"></i> AI & Logic</div>
+          <div class="flex flex-wrap gap-2">
+            <span class="skill-pill">Deep Learning</span><span class="skill-pill">Machine Learning</span><span class="skill-pill">NLP</span>
+          </div>
+        </div>
+        <div>
+          <div class="flex items-center gap-2 mb-5 font-mono text-xs text-gray-400 uppercase tracking-widest"><i class="fas fa-layer-group text-cyan"></i> Tools</div>
+          <div class="flex flex-wrap gap-2">
+            <span class="skill-pill">Git</span><span class="skill-pill">AWS</span><span class="skill-pill">Full-Stack Web</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contact" class="py-20 border-t border-border bg-bg">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="flex flex-col md:flex-row items-center md:items-start justify-between gap-10">
+        <div class="text-center md:text-left" data-aos="fade-up">
+          <p class="section-label mb-3">// Contact</p>
+          <h2 class="font-display text-3xl font-bold text-white mb-3">Let's <span class="glow-text">Connect.</span></h2>
+          <p class="text-gray-500 text-sm max-w-sm leading-relaxed font-mono">Open for AI/ML and Full-Stack development opportunities.</p>
+          <a href="mailto:shyamlikhadse@gmail.com" class="inline-flex items-center gap-2 mt-6 btn-cyan px-6 py-3 rounded text-sm font-mono tracking-widest">
+            <i class="fas fa-paper-plane"></i> Say_Hello
+          </a>
+        </div>
+        <div class="flex flex-col items-center gap-6" data-aos="fade-up">
+          <div class="flex gap-6">
+            <a href="https://www.linkedin.com/in/shyamli-khadse-7699942b0/" target="_blank" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://github.com/kshyamli" target="_blank" class="social-icon"><i class="fab fa-github"></i></a>
+            <a href="mailto:shyamlikhadse@gmail.com" class="social-icon"><i class="fas fa-envelope"></i></a>
+          </div>
+          <a href="#" class="btn-cyan px-5 py-2.5 rounded text-xs font-mono tracking-widest">Resume_PDF</a>
+        </div>
+      </div>
+      <div class="mt-14 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 border-t border-border">
+        <span class="font-display text-xs glow-text tracking-widest uppercase font-bold">Shyamli Khadse</span>
+        <p class="text-[10px] text-gray-700 font-mono tracking-widest uppercase">Built with Cyan & Logic // 2026</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>
+    AOS.init({ duration: 700, once: true });
+    (function () {
+      const canvas = document.getElementById('particle-canvas');
+      const ctx = canvas.getContext('2d');
+      let W, H, particles = [];
+      function resize() { W = canvas.width = canvas.parentElement.offsetWidth; H = canvas.height = canvas.parentElement.offsetHeight; }
+      function mkParticle() { return { x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - 0.5) * 0.35, vy: (Math.random() - 0.5) * 0.35, r: Math.random() * 1.5 + 0.5 }; }
+      function init() { resize(); particles = Array.from({ length: 80 }, mkParticle); }
+      function draw() {
+        ctx.clearRect(0, 0, W, H);
+        particles.forEach(p => {
+          p.x += p.vx; p.y += p.vy;
+          if (p.x < 0 || p.x > W) p.vx *= -1;
+          if (p.y < 0 || p.y > H) p.vy *= -1;
+          ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(0,255,255,0.4)'; ctx.fill();
+        });
+        requestAnimationFrame(draw);
+      }
+      init(); draw(); window.addEventListener('resize', resize);
+    })();
+  </script>
+</body>
+</html>
